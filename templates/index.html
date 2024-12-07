@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>크리스마스 카드</title>
+    <!-- 따뜻하고 부드러운 폰트 'Lora' 사용 -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            background-color: #faf3e0; /* 부드러운 크림색 배경 */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-image: url('{{ url_for('static', filename='images/warm-wood-texture.jpg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* 홈 버튼과 그 외 기존 코드 */
+        nav {
+            background-color: #d65c5c;  /* 따뜻한 빨간색 */
+            padding: 15px 30px;  /* 홈버튼 크기 설정 */
+            text-align: left;
+            border-bottom: 3px solid #ffcc00; /* 크리스마스 골드 테두리 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px; /* 버튼 텍스트 크기 */
+            padding: 15px 30px; /* 홈 버튼 크기 설정 */
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        nav a:hover {
+            background-color: #ff5733; /* 더 따뜻한 빨간색 */
+        }
+
+        h1 {
+            text-align: center;
+            color: #d65c5c; /* 따뜻한 빨간색 */
+            font-size: 3rem;
+            margin-top: 80px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .letter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            margin-top: 80px; /* 상단 메뉴 공간 확보 */
+        }
+
+        .letter-item {
+            width: 300px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85); /* 투명한 카드 배경 */
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .letter-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .letter-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .create-letter-btn {
+            text-align: center;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+
+        .create-letter-btn a {
+            padding: 15px 30px;  /* 크기 설정 */
+            background: linear-gradient(135deg, #f4d03f, #ff6347); /* 부드러운 그라디언트 */
+            color: white;
+            font-size: 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .create-letter-btn a:hover {
+            background: linear-gradient(135deg, #ff5733, #f4d03f); /* 따뜻한 그라디언트 */
+        }
+
+        .letter-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #5d4037; /* 따뜻한 갈색 */
+        }
+
+        .letter-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #6f4f4f; /* 부드러운 회갈색 */
+            overflow-wrap: break-word;
+        }
+
+        .letter-item p strong {
+            color: #5d4037; /* 따뜻한 갈색 */
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.5rem;
+            color: #d65c5c;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">홈</a>
+    </nav>
+
+    <h1>모두에게 전하는 크리스마스 카드</h1>
+
+    <div class="letter-container">
+        {% for letter in letters %}
+            <div class="letter-item">
+                <h3>{{ letter.sender_name }}님</h3>
+                <p>{{ letter.content }}</p>
+                {% if letter.image_filename %}
+                    <img src="{{ url_for('static', filename='uploads/' + letter.image_filename) }}" alt="편지 이미지">
+                    <br>
+                    <a href="{{ url_for('view_image', filename=letter.image_filename) }}">자세히 보기</a>
+                {% endif %}
+                <p><strong>보낸 날짜:</strong> {{ letter.date_sent }}</p>
+            </div>
+        {% else %}
+            <p>작성된 편지가 없습니다.</p>
+        {% endfor %}
+    </div>
+
+    <div class="create-letter-btn">
+        <a href="{{ url_for('create_letter') }}">편지 작성</a>
+    </div>
+
+    <div class="footer">
+        <p>Merry Christmas!</p>
+    </div>
+
+</body>
+</html>

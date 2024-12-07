@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 보기</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">홈</a>
+    </nav>
+
+    <div class="image-container">
+        <h2>편지 이미지</h2>
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="편지 이미지" style="max-width: 100%; max-height: 80vh; border-radius: 8px;">
+    </div>
+</body>
+</html>
