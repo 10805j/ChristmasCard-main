@@ -3,8 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이미지 보기</title>
+    <title>편지 이미지 보기</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            background-color: #faf3e0; /* 크림색 배경 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #d65c5c; /* 빨간색 메뉴 배경 */
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        nav:hover {
+            background-color: #ff5733; /* Hover 시 조금 더 진한 빨간색 */
+        }
+
+        .image-container {
+            background-color: rgba(255, 255, 255, 0.9); /* 배경이 흐리지 않도록 */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 80%;
+            margin-top: 80px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container:hover {
+            transform: scale(1.02); /* 이미지 확대 효과 */
+        }
+
+        .image-container h2 {
+            font-size: 2.5rem;
+            color: #5d4037; /* 어두운 갈색 제목 */
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .image-container img:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Hover 시 이미지 그림자 강조 */
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -13,7 +77,7 @@
 
     <div class="image-container">
         <h2>편지 이미지</h2>
-        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="편지 이미지" style="max-width: 100%; max-height: 80vh; border-radius: 8px;">
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="편지 이미지">
     </div>
 </body>
 </html>

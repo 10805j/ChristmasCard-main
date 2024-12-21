@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>크리스마스 카드</title>
-    <!-- 따뜻하고 부드러운 폰트 'Lora' 사용 -->
+    <title>편지 작성</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
         body {
             font-family: 'Lora', serif;
-            background-color: #faf3e0; /* 부드러운 크림색 배경 */
-            color: #333;
+            background-color: #faf3e0;
             margin: 0;
             padding: 0;
+            color: #333;
             background-image: url('{{ url_for('static', filename='images/warm-wood-texture.jpg') }}');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
         }
 
-        /* 홈 버튼과 그 외 기존 코드 */
         nav {
-            background-color: #d65c5c;  /* 따뜻한 빨간색 */
-            padding: 15px 30px;  /* 홈버튼 크기 설정 */
+            background-color: #d65c5c; /* 따뜻한 빨간색 */
+            padding: 15px 30px;
             text-align: left;
             border-bottom: 3px solid #ffcc00; /* 크리스마스 골드 테두리 */
             position: fixed;
@@ -35,14 +32,14 @@
         nav a {
             color: white;
             text-decoration: none;
-            font-size: 18px; /* 버튼 텍스트 크기 */
-            padding: 15px 30px; /* 홈 버튼 크기 설정 */
+            font-size: 18px;
+            padding: 15px 30px;
             border-radius: 5px;
             text-align: center;
         }
 
         nav a:hover {
-            background-color: #ff5733; /* 더 따뜻한 빨간색 */
+            background-color: #ff5733;
         }
 
         h1 {
@@ -53,67 +50,61 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .letter-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            margin-top: 80px; /* 상단 메뉴 공간 확보 */
-        }
-
-        .letter-item {
-            width: 300px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.85); /* 투명한 카드 배경 */
+        .create-letter-form {
+            width: 60%;
+            margin: 100px auto 50px auto;
+            padding: 30px;
             border-radius: 15px;
+            background: rgba(255, 255, 255, 0.85);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* 텍스트와 날짜를 잘 분리 */
-            height: 400px; /* 카드의 높이를 고정하여 텍스트가 넘치지 않도록 제한 */
-            overflow: hidden; /* 텍스트가 카드 밖으로 빠져나가지 않게 함 */
         }
 
-        .letter-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .letter-item img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .letter-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #5d4037; /* 따뜻한 갈색 */
-        }
-
-        .letter-item p {
+        .create-letter-form input, .create-letter-form textarea {
+            width: 100%;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: 'Lora', serif;
             font-size: 1rem;
-            line-height: 1.6;
-            color: #6f4f4f; /* 부드러운 회갈색 */
-            margin-bottom: 20px; /* 작성 날짜와 간격을 두기 위해 여백 추가 */
         }
 
-        .letter-item p strong {
-            color: #5d4037; /* 따뜻한 갈색 */
+        .create-letter-form textarea {
+            height: 100px; /* 텍스트 입력창 고정 높이 */
+            resize: none; /* 크기 조절 비활성화 */
+            overflow-x: auto; /* 텍스트가 넘칠 경우 가로 스크롤 */
+            overflow-y: hidden; /* 세로 스크롤 방지 */
+            white-space: nowrap; /* 줄바꿈 방지 */
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 1.5rem;
-            color: #d65c5c;
-            padding: 20px;
+        .create-letter-form button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #f4d03f, #ff6347);
+            color: white;
+            font-size: 20px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
+        .create-letter-form button:hover {
+            background: linear-gradient(135deg, #ff5733, #f4d03f);
+        }
+
+        .char-count {
+            font-size: 1rem;
+            color: #5d4037;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -121,32 +112,33 @@
         <a href="{{ url_for('index') }}">홈</a>
     </nav>
 
-    <h1>모두에게 전하는 크리스마스 카드</h1>
+    <h1>편지 작성하기</h1>
 
-    <div class="letter-container">
-        {% for letter in letters %}
-            <div class="letter-item">
-                <h3>{{ letter.sender_name }}님</h3>
-                <p>{{ letter.content }}</p>
-                {% if letter.image_filename %}
-                    <img src="{{ url_for('static', filename='uploads/' + letter.image_filename) }}" alt="편지 이미지">
-                    <br>
-                    <a href="{{ url_for('view_image', filename=letter.image_filename) }}">자세히 보기</a>
-                {% endif %}
-                <p><strong>보낸 날짜:</strong> {{ letter.date_sent }}</p>
-            </div>
-        {% else %}
-            <p>작성된 편지가 없습니다.</p>
-        {% endfor %}
-    </div>
+    <form class="create-letter-form" action="{{ url_for('create_letter') }}" method="POST" enctype="multipart/form-data">
+        <label for="sender_name">보낸 사람 이름 (15자 이하):</label>
+        <input type="text" id="sender_name" name="sender_name" maxlength="15" required>
 
-    <div class="create-letter-btn">
-        <a href="{{ url_for('create_letter') }}">편지 작성</a>
-    </div>
+        <label for="content">편지 내용 (100자 이하):</label>
+        <textarea id="content" name="content" maxlength="100" required></textarea>
+        <p class="char-count">글자 수: <span id="char-count">0</span>/100</p>
 
-    <div class="footer">
-        <p>Merry Christmas!</p>
-    </div>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
 
+        <label for="image">편지 이미지:</label>
+        <input type="file" id="image" name="image">
+
+        <button type="submit" id="submit-btn">편지 보내기</button>
+    </form>
+
+    <script>
+        const contentField = document.getElementById('content');
+        const charCount = document.getElementById('char-count');
+
+        contentField.addEventListener('input', function () {
+            charCount.textContent = contentField.value.length;
+        });
+    </script>
 </body>
 </html>
