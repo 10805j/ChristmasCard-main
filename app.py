@@ -107,7 +107,4 @@ def index():
 def view_image(filename):
     return render_template('view_image.html', filename=filename)
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # 데이터베이스 테이블 생성
-    app.run(debug=True)  # 디버그 모드를 활성화하여 오류 메시지 확인
+
